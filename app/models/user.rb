@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_many :measurements, foreign_key: :created_by
 
   # Validations
   validates_uniqueness_of :name
