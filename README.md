@@ -56,6 +56,8 @@ Clone the repository by clicking on "Clone or Download" and copy the given link.
 ## **Testing**
 
 **To check the test run the following command:** <br>
+` rails db:migrate RAILS_ENV=test`
+
 `bundle exec rspec`
 
 
