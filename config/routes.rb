@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  scope module: :v1, constraints: ApiVersion.new('v1', true) do
-    resources :measurements do
-      resources :measures
-    end
-  end
-
-  resource :authentication, only: [:create]
   post 'signup', to: 'users#create'
+  post 'login', to: 'sessions#login'
+  get 'logged_in', to: 'sessions#logged_in'
+  delete 'logout', to: 'sessions#logout'
+  resources :trainings, only: %i[show]
+  get 'all/trainings', to: 'trainings#index'
+  post 'create/training', to: 'trainings#create'
+  post 'create/measure', to: 'measures#create'
+  get 'all/measures', to: 'measures#index'
 end

@@ -1,10 +1,8 @@
 class User < ApplicationRecord
-  # encrypt password
   has_secure_password
-  validates_uniqueness_of :name, :email
-
-  # Model associations
-  has_many :measurements, foreign_key: :created_by
-  # Validations
   validates_presence_of :name, :email, :password_digest
+  validates_uniqueness_of :name, :email
+  validates_format_of :email, with: /\A\S+@.+\.\S+\z/
+  has_many :trainings
+  has_many :measures
 end

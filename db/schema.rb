@@ -10,24 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_21_200036) do
+ActiveRecord::Schema.define(version: 2021_09_27_144229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "measurements", force: :cascade do |t|
-    t.string "name"
-    t.string "created_by"
+  create_table "measures", force: :cascade do |t|
+    t.integer "time"
+    t.integer "count"
+    t.bigint "user_id", null: false
+    t.bigint "training_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["training_id"], name: "index_measures_on_training_id"
+    t.index ["user_id"], name: "index_measures_on_user_id"
   end
 
-  create_table "measures", force: :cascade do |t|
-    t.string "value_of_measure"
-    t.bigint "measurement_id", null: false
+  create_table "trainings", force: :cascade do |t|
+    t.string "name"
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["measurement_id"], name: "index_measures_on_measurement_id"
+    t.index ["user_id"], name: "index_trainings_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -36,8 +40,9 @@ ActiveRecord::Schema.define(version: 2021_08_21_200036) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_users_on_name", unique: true
   end
 
-  add_foreign_key "measures", "measurements"
+  add_foreign_key "measures", "trainings"
+  add_foreign_key "measures", "users"
+  add_foreign_key "trainings", "users"
 end

@@ -1,15 +1,40 @@
+# Application controller class
 class ApplicationController < ActionController::API
-  include Response
-  include ExceptionHandler
+  def encode_token(payload)
+    JWT.encode(payload, 'himtsu')
+  end
 
-  # called before every action on controllers
-  before_action :authorize_request
-  attr_reader :current_user
+  def auth_header
+    request.headers['Authorization']
+  end
 
-  private
+  def decoded_token
+    return unless auth_header
 
-  # Check for valid request token and return user
-  def authorize_request
-    @current_user = (AuthorizeApiRequest.new(request.headers).call)[:user]
+    token = auth_header.split[1]
+    begin
+      JWT.decode(token, 'himtsu', true, algorithm: 'HS256')
+    rescue JWT::DecodeError
+      nil
+    end
+  end
+
+  def logged_in_user
+    return unless decoded_token
+
+    user_id = decoded_token[0]['user_id']
+    @user = User.find_by(id: user_id)
+  end
+
+  def logged_in?
+    !!logged_in_user
+  end
+
+  def authorized
+    render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?
+  end
+
+  def check_logged_in
+    logged_in? ? logged_in_user : nil
   end
 end

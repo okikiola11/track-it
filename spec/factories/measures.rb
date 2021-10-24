@@ -1,6 +1,9 @@
+require 'faker'
 FactoryBot.define do
   factory :measure do
-    value_of_measure { Faker::Movies::StarWars.character }
-    measurement_id nil
+    time { 1 }
+    count { 1 }
+    user { nil }
+    training { nil }
   end
 end

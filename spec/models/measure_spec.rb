@@ -1,4 +1,13 @@
+require 'rails_helper'
+
 RSpec.describe Measure, type: :model do
-  it { should belong_to(:measurement) }
-  it { should validate_presence_of(:value_of_measure) }
+  describe 'validations' do
+    it { should validate_presence_of(:time) }
+    it { should validate_presence_of(:count) }
+  end
+
+  describe 'associations' do
+    it { should belong_to(:training) }
+    it { should belong_to(:user) }
+  end
 end
