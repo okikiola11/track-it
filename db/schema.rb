@@ -10,39 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_27_144229) do
-
+ActiveRecord::Schema.define(version: 20_210_927_144_229) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "measures", force: :cascade do |t|
-    t.integer "time"
-    t.integer "count"
-    t.bigint "user_id", null: false
-    t.bigint "training_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["training_id"], name: "index_measures_on_training_id"
-    t.index ["user_id"], name: "index_measures_on_user_id"
+  create_table 'measures', force: :cascade do |t|
+    t.integer 'time'
+    t.integer 'count'
+    t.bigint 'user_id', null: false
+    t.bigint 'training_id', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['training_id'], name: 'index_measures_on_training_id'
+    t.index ['user_id'], name: 'index_measures_on_user_id'
   end
 
-  create_table "trainings", force: :cascade do |t|
-    t.string "name"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_trainings_on_user_id"
+  create_table 'trainings', force: :cascade do |t|
+    t.string 'name'
+    t.bigint 'user_id', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['user_id'], name: 'index_trainings_on_user_id'
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "password_digest"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+  create_table 'users', force: :cascade do |t|
+    t.string 'name'
+    t.string 'email'
+    t.string 'password_digest'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
   end
 
-  add_foreign_key "measures", "trainings"
-  add_foreign_key "measures", "users"
-  add_foreign_key "trainings", "users"
+  add_foreign_key 'measures', 'trainings'
+  add_foreign_key 'measures', 'users'
+  add_foreign_key 'trainings', 'users'
 end
